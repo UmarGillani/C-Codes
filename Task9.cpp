@@ -1,53 +1,53 @@
 #include <stdio.h>
+
+float add(float a, float b);
+float subtract(float a, float b);
+float multiply(float a, float b);
+float divide(float a, float b);
+
 int main() {
-	int original[3][3] = {0};
-	int rotated[3][3] = {0};
-	int temp,notsame=0;
-	for (int i=0;i<3;i++) {
-		for (int j=0;j<3;j++) {
-			printf("Enter value for element at index (%d,%d) :\n",i+1,j+1);
-			scanf("%d",&original[i][j]);
-		}
+	float num1,num2,ans=0;
+	int choice=0;
+	float (*operation)(float, float) = NULL;  //function pointer
+	printf("Enter the first number :\n");
+	scanf("%f",&num1);
+	printf("Enter the second number :\n");
+	scanf("%f",&num2);
+	printf("\n\t---Mini Calculator---\n");
+	printf("\n1. Add\n2. Subtract\n3. Multiply\n4. Divide\n\n");
+	scanf("%d",&choice);
+	if (choice == 1) {
+		operation = add;
+		ans = operation(num1,num2);
+		printf("%.2f + %.2f = %.2f\n",num1,num2,ans);
 	}
-	for (int i=0;i<3;i++) {
-		for (int j=0;j<3;j++) {
-			rotated[j][i] = original[i][j];
-		}
+	else if (choice == 2) {
+		operation = subtract;
+		ans = operation(num1,num2);
+		printf("%.2f - %.2f = %.2f\n",num1,num2,ans);
 	}
-	for (int i=0;i<3;i++) {
-		for (int j=0;j<1;j++) {    //j < 1, so inner loop only iterates once because only 1st and 3rd element in every row need switching
-			temp = rotated[i][j];
-            rotated[i][j] = rotated[i][2 - j];   //rotated[i][2 - j] is the right most element in a row of 3x3 matrix
-            rotated[i][2 - j] = temp;
-		}
+	else if (choice == 3) {
+		operation = multiply;
+		ans = operation(num1,num2);
+		printf("%.2f x %.2f = %.2f\n",num1,num2,ans);
 	}
-	for (int i=0;i<3;i++) {
-		for (int j=0;j<3;j++) {
-			if (original[i][j] != rotated[i][j]) {
-				notsame = 1;
-				break;
-			}
+	else if (choice == 4) {
+		if (num2 == 0) {
+			printf("Math Error! Can not divide by zero!\n");
 		}
-	}
-	printf("\nOriginal Matrix\n");
-	for (int i=0;i<3;i++) {
-		for (int j=0;j<3;j++) {
-			printf("%d ",original[i][j]);
+		else {
+			operation = divide;
+			ans = operation(num1,num2);
+			printf("%.2f / %.2f = %.2f\n",num1,num2,ans);
 		}
-		printf("\n");
-	}
-	printf("\nRotated Matrix\n");
-	for (int i=0;i<3;i++) {
-		for (int j=0;j<3;j++) {
-			printf("%d ",rotated[i][j]);
-		}
-		printf("\n");
-	}	
-	if (notsame == 0) {
-		printf("\nBoth matrices are the same!\n");
 	}
 	else {
-		printf("Both matrices are different\n");
+		printf("Invalid choice! Select from operations (1-4)\n");
 	}
 	return 0;
 }
+
+float add(float a, float b) {return (a+b);}
+float subtract(float a, float b) {return (a-b);}
+float multiply(float a, float b) {return (a*b);}
+float divide(float a, float b) {return (a/b);}
