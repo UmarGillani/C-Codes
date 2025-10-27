@@ -1,25 +1,19 @@
 #include <stdio.h>
+
+void swap(int *a,int *b);
+
 int main() {
-	int n=0;
-	printf("Enter number of rows for the top half :\n");
-	scanf("%d",&n);
-	for (int i=1;i<=n;i++) {
-		for (int space = i;space<n;space++) {
-			printf(" ");
-		}
-		for (int j=1;j<=(2*i - 1);j++) {
-			printf("*");
-		}
-		printf("\n");	
-	}
-	for (int i= n-1;i >= 1;i--) {
-        for (int space = n; space > i; space--) {
-            printf(" ");
-        }
-        for (int j = 1; j <= (2 * i - 1); j++) {
-            printf("*");
-        }
-        printf("\n");
-    }
+	int a=5;
+	int b=10;
+	printf("Before Swapping\na = %d and b = %d\n",a,b);
+	swap(&a,&b);
+	printf("\nAfter Swapping\na = %d and b = %d\n",a,b);
 	return 0;
+}
+
+void swap(int *a,int *b) {
+	int temp=0;
+	temp = *a;
+	*a = *b;
+	*b = temp;
 }
